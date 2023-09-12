@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
@@ -7,10 +8,10 @@ namespace StarterAssets
 {
 	public class StarterAssetsInputs : MonoBehaviour
 	{
-		[Header("Character Input Values")]
+        [Header("Character Input Values")]
 		public Vector2 move;
 		public Vector2 look;
-		public float zoom;
+		public Action <float> OnZoomAction;
 		public bool jump;
 		public bool sprint;
 
@@ -21,7 +22,7 @@ namespace StarterAssets
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
 
-#if ENABLE_INPUT_SYSTEM
+
 		public void OnMove(InputValue value)
 		{
 			MoveInput(value.Get<Vector2>());
@@ -48,7 +49,6 @@ namespace StarterAssets
 		{
 			SprintInput(value.isPressed);
 		}
-#endif
 
 
 		public void MoveInput(Vector2 newMoveDirection)
@@ -72,7 +72,7 @@ namespace StarterAssets
 		}
 		public void Zoom(Vector2 zoomValue)
         {
-			zoom = zoomValue.y;
+			OnZoomAction?.Invoke(zoomValue.y);
         }
 
 		private void OnApplicationFocus(bool hasFocus)
