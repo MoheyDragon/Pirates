@@ -39,9 +39,11 @@ public class CharacterSelector : MonoBehaviour
     public void SelectCharacter(int characterIndex)
     {
         DeControlPreviousCharacter();
+        TurnOffHighlightRingPreviousCharacter();
         SetSelectedCharacter(characterIndex);
         ChangeCameraFollowTarget();
         ControlSelectedCharacter();
+        HighlightSelectionRing();
     }
     private void SetSelectedCharacter(int characterIndex)
     {
@@ -57,6 +59,15 @@ public class CharacterSelector : MonoBehaviour
     {
         if(currentSelectedCharacter!=null)
         currentSelectedCharacter.ReleaseCharacter();
+    }
+    private void TurnOffHighlightRingPreviousCharacter()
+    {
+        if(currentSelectedCharacter!=null)
+        currentSelectedCharacter.HighlightSelectionRing(false);
+    }
+    private void HighlightSelectionRing()
+    {
+        currentSelectedCharacter.HighlightSelectionRing(true);
     }
     private void ControlSelectedCharacter()
     {
