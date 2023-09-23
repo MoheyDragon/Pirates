@@ -22,7 +22,6 @@ namespace StarterAssets
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
 
-
 		public void OnMove(InputValue value)
 		{
 			MoveInput(value.Get<Vector2>());
@@ -49,8 +48,16 @@ namespace StarterAssets
 		{
 			SprintInput(value.isPressed);
 		}
-
-
+		public Action Attack;
+		public void OnAttack(InputValue value)
+        {
+			Attack?.Invoke();
+        }
+		public Action Draw;
+		public void OnDraw(InputValue value)
+        {
+			Draw?.Invoke();
+        }
 		public void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;

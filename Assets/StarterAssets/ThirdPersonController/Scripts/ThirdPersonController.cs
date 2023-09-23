@@ -224,22 +224,23 @@ namespace StarterAssets
             float speedOffset = 0.1f;
             float inputMagnitude = input.analogMovement ? input.move.magnitude : 1f;
 
-            // accelerate or decelerate to target speed
-            if (currentHorizontalSpeed < targetSpeed - speedOffset ||
-                currentHorizontalSpeed > targetSpeed + speedOffset)
-            {
-                // creates curved result rather than a linear one giving a more organic speed change
-                // note T in Lerp is clamped, so we don't need to clamp our speed
-                _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude,
-                    Time.deltaTime * SpeedChangeRate);
+            //// accelerate or decelerate to target speed
+            //if (currentHorizontalSpeed < targetSpeed - speedOffset ||
+            //    currentHorizontalSpeed > targetSpeed + speedOffset)
+            //{
+            //    // creates curved result rather than a linear one giving a more organic speed change
+            //    // note T in Lerp is clamped, so we don't need to clamp our speed
+            //    _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude,
+            //        Time.deltaTime * SpeedChangeRate);
 
-                // round speed to 3 decimal places
-                _speed = Mathf.Round(_speed * 1000f) / 1000f;
-            }
-            else
-            {
+            //    // round speed to 3 decimal places
+            //    _speed = Mathf.Round(_speed * 1000f) / 1000f;
+            //}
+            //else
+            //{
+            //    _speed = targetSpeed;
+            //}
                 _speed = targetSpeed;
-            }
 
             _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
             if (_animationBlend < 0.01f) _animationBlend = 0f;
