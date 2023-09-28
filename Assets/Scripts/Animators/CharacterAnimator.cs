@@ -9,8 +9,11 @@ public class CharacterAnimator : MonoBehaviour
     [SerializeField] StarterAssetsInputs input;
     [Space]
     [SerializeField] Transform[] characterHands;
-    [SerializeField] Transform[] weapons;
-    [SerializeField] Transform weaponsScabbard;
+    [SerializeField] Weapon[] weaponsPrefabs;
+    [SerializeField] Transform weaponsParent;
+                     Weapon[] weapons;
+    [SerializeField] Transform[] weaponsPockets;
+    public Transform GetPocketTransformByIndex(int pocketIndex) => weaponsPockets[pocketIndex];
     [SerializeField] float SheathDuration=0.5f;
     int currentWeaponSelectedIndex;
 
@@ -19,20 +22,17 @@ public class CharacterAnimator : MonoBehaviour
         animator = GetComponent<Animator>();
         input.Attack += OnAttackPressed;
         input.Draw += OnDrawPressed;
+        input.SwitchWeapon += OnChangeWeaponPressed;
+        weapons = new Weapon[weaponsPrefabs.Length];
+        for (int i = 0; i < weaponsPrefabs.Length; i++)
+        {
+            weapons[i] = Instantiate(weaponsPrefabs[i], weaponsParent);
+            weapons[i].SetupWeapon(this);
+        }
     }
-    private string AttackAnimatorParameter = "Attack";
-    private void OnAttackPressed()
-    {
-        if (animatorInAction)
-            return;
-
-        if (IsWeaponDrawn)
-            Attack();
-        else
-            DrawWeapon();
-    }
-    private bool IsWeaponDrawn;
     private bool animatorInAction;
+    public bool IsAnimatorInAction => animatorInAction;
+    private bool IsWeaponDrawn;
     private string DrawAnimatorParameter = "Draw";
     private string SheathAnimatorParameter = "Sheath";
     private void OnDrawPressed()
@@ -45,55 +45,106 @@ public class CharacterAnimator : MonoBehaviour
         else
             DrawWeapon();
     }
+    private string AttackAnimatorParameter = "Attack";
+    private void OnAttackPressed()
+    {
+        if (animatorInAction)
+            return;
+
+        if (IsWeaponDrawn)
+            Attack();
+        else
+            DrawWeapon();
+    }
+    bool weaponIndexSwitcherPending;
+    private void OnChangeWeaponPressed()
+    {
+        if (weapons.Length == 1) return;
+        if (IsWeaponDrawn)
+        {
+            SheathWeapon();
+            weaponIndexSwitcherPending = true;
+        }
+        else
+        {
+            DoWeaponSwitch();
+        }
+    }
+    private void DoWeaponSwitch()
+    {
+        _SwitchCurrentWeaponIndex();
+        RaiseWeaponUpperBodyLayer();
+        weaponIndexSwitcherPending = false;
+    }
     private void Attack()
     {
         animatorInAction = true;
         animator.SetTrigger(AttackAnimatorParameter);
     }
+    public void ReachedAttackingFrame()
+    {
+        weapons[currentWeaponSelectedIndex].HandleDamage();
+    }
     private void DrawWeapon()
     {
         animatorInAction = true;
         animator.SetTrigger(DrawAnimatorParameter);
-        IsWeaponDrawn = true;
     }
     private void SheathWeapon()
     {
         animatorInAction = true;
         animator.SetTrigger(SheathAnimatorParameter);
-        IsWeaponDrawn = false;
     }
-    public void MoveWeaponToCombatSlot(int handIndex)
+    public void MoveWeaponToCombatSlot()
     {
-        EnterCombatMode(handIndex+1);
-        weapons[handIndex].SetParent(characterHands[handIndex]);
-        ResetWeaponPosition(handIndex);
+        EnterCombatMode();
+        weapons[currentWeaponSelectedIndex].Draw(characterHands);
     }
-    public void MoveWeaponToIdleSlot(int handIndex)
+    public void MoveWeaponToIdleSlot()
     {
-        ExitCombatMode(handIndex+1);
-        weapons[handIndex].SetParent(weaponsScabbard);
-        ResetWeaponPosition(handIndex);
+        ExitCombatMode();
+        weapons[currentWeaponSelectedIndex].Sheath();
     }
     public void AnimationFinished()
     {
         animatorInAction = false;
     }
-    private void EnterCombatMode(int layerIndex)
+    public void OnDrawFinish()
     {
-        ChangeLayerWeight(layerIndex, 1);
+        animatorInAction = false;
+        IsWeaponDrawn = !IsWeaponDrawn;
+        if (weaponIndexSwitcherPending)
+        {
+            DoWeaponSwitch();
+        }
     }
-    private void ExitCombatMode(int layerIndex)
+    
+    private void EnterCombatMode()
     {
-        ChangeLayerWeight(layerIndex, 0);
+        ChangeLayerWeight(GetWeaponCombatLayer, 1);
+    }
+    private void ExitCombatMode()
+    {
+        ChangeLayerWeight(GetWeaponCombatLayer, 0);
     }
     private void ChangeLayerWeight(int layerIndex,float targetWeight)
     {
         LeanTween.value(gameObject, 1, 0, SheathDuration).setEaseInOutSine().setOnUpdate((float value) =>
         animator.SetLayerWeight(layerIndex, targetWeight));
     }
-    private void ResetWeaponPosition(int handIndex)
+    private void _SwitchCurrentWeaponIndex()
     {
-        LeanTween.moveLocal(weapons[handIndex].gameObject, Vector3.zero, SheathDuration);
-        LeanTween.rotateLocal(weapons[handIndex].gameObject, Vector3.zero, SheathDuration);
+        currentWeaponSelectedIndex++;
+        if (currentWeaponSelectedIndex==weapons.Length)
+            currentWeaponSelectedIndex = 0;
     }
+    private void RaiseWeaponUpperBodyLayer()
+    {
+        animator.SetLayerWeight(GetWeaponUpperBodyLayer, 1);
+    }
+    // There Should be 2 layers per weapon, first is synched with the Base layer and has the non-combat animations that should play
+    // while selecting this weapon (like walking- jumping,...), Second layer is not synched with base layer, and have an avatar mask 
+    // of upper body only, and it's responsible of Drawing, Sheathin and attack animations
+    private int GetWeaponCombatLayer=> (currentWeaponSelectedIndex * 2) + 1;
+    private int GetWeaponUpperBodyLayer => (currentWeaponSelectedIndex * 2) + 2;
 }

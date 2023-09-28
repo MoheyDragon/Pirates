@@ -66,7 +66,7 @@ PrefabInstance:
     - target: {fileID: 5232999412717762273, guid: 44120c02df7caf840a716db6db8a395a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 5232999412717762273, guid: 44120c02df7caf840a716db6db8a395a,
         type: 3}
@@ -126,8 +126,25 @@ PrefabInstance:
     - target: {fileID: 5703502967421447003, guid: 44120c02df7caf840a716db6db8a395a,
         type: 3}
       propertyPath: m_Name
-      value: Brawler
+      value: SwordsMan
       objectReference: {fileID: 0}
+    - target: {fileID: 6360393209946332951, guid: 44120c02df7caf840a716db6db8a395a,
+        type: 3}
+      propertyPath: weapons.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6360393209946332951, guid: 44120c02df7caf840a716db6db8a395a,
+        type: 3}
+      propertyPath: weapons.Array.data[0]
+      value: 
+      objectReference: {fileID: 5485692104343562248, guid: 4c0867bf2a71eb443af124720812a757,
+        type: 3}
+    - target: {fileID: 6360393209946332951, guid: 44120c02df7caf840a716db6db8a395a,
+        type: 3}
+      propertyPath: weaponsPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 5485692104343562248, guid: 4c0867bf2a71eb443af124720812a757,
+        type: 3}
     - target: {fileID: 6487072846531856876, guid: 44120c02df7caf840a716db6db8a395a,
         type: 3}
       propertyPath: m_IsActive

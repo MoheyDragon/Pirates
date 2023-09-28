@@ -67,6 +67,33 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchWeapon",
+                    "type": "Button",
+                    "id": "4700fae1-b951-4368-8769-ccaa9302c3f2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NextCharacter",
+                    "type": "Button",
+                    "id": "491dc721-6cae-4370-90a5-093cdd342c58",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PreviousCharacter",
+                    "type": "Button",
+                    "id": "a38627c9-89ac-4302-8c9a-447f3ed097c9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -216,7 +243,7 @@
                 {
                     "name": "Left",
                     "id": "8a4df6db-ccf3-4548-8579-15c553651515",
-                    "path": "<Keyboard>/q",
+                    "path": "<Mouse>/delta/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -227,7 +254,7 @@
                 {
                     "name": "Right",
                     "id": "eb2cd2e0-5786-489b-95c6-fd5d129c7c76",
-                    "path": "<Keyboard>/e",
+                    "path": "<Mouse>/delta/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -397,6 +424,72 @@
                     "processors": "",
                     "groups": "",
                     "action": "Draw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "97964e50-508d-4731-af3f-8eb3b09a1a0d",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3ca175d2-287d-4d0e-b14c-9e698f8eefcd",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "01353b47-dc3a-46a8-a65d-c39838218375",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextCharacter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "381342e3-f709-41a6-a9f6-21ac28608b6d",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextCharacter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ab692b62-27e5-429d-a884-4f7967172b70",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PreviousCharacter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d132aa17-227c-4717-90fa-af10f177a15f",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PreviousCharacter",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

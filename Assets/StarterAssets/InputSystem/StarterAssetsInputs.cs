@@ -58,6 +58,19 @@ namespace StarterAssets
         {
 			Draw?.Invoke();
         }
+		public Action SwitchWeapon;
+		public void OnSwitchWeapon(InputValue value)
+        {
+			SwitchWeapon?.Invoke();
+        }
+		public void OnNextCharacter(InputValue value)
+        {
+			CharacterSelector.singleton.NextCharacter();
+        }
+		public void OnPreviousCharacter(InputValue value)
+		{
+			CharacterSelector.singleton.PreviousCharacter();
+		}
 		public void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;

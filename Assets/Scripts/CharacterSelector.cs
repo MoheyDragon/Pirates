@@ -1,7 +1,7 @@
 using UnityEngine;
 using Cinemachine;
 using StarterAssets;
-public class CharacterSelector : MonoBehaviour
+public class CharacterSelector : Singleton<CharacterSelector>
 {
     int currentCharacterIndex;
                      CharacterSelectionHandler currentSelectedCharacter;
@@ -11,20 +11,15 @@ public class CharacterSelector : MonoBehaviour
     {
         SelectCharacter(0);
     }
-    private void Update()
+    public void NextCharacter()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
-            NextCharacter();
-        if (Input.GetKeyDown(KeyCode.R))
-            PreviousCharacter();
-    }
-    private void NextCharacter()
-    {
+        if (currentSelectedCharacter.IsCharacterAnimatorBusy) return;
         CycleCharacterIndex(1);   
         SelectCharacter(currentCharacterIndex);
     }
-    private void PreviousCharacter()
+    public void PreviousCharacter()
     {
+        if (currentSelectedCharacter.IsCharacterAnimatorBusy) return;
         CycleCharacterIndex(-1);
         SelectCharacter(currentCharacterIndex);
     }

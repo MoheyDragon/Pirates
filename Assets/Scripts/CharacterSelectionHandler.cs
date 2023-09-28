@@ -5,12 +5,14 @@ using UnityEngine.InputSystem;
 public class CharacterSelectionHandler : MonoBehaviour
 {
     ThirdPersonController thirdPersonController;
+    CharacterAnimator characterAnimator;
     StarterAssetsInputs input;
     PlayerInput playerInput;
     [SerializeField] GameObject SelectionRing;
     void Start()
     {
         thirdPersonController = GetComponent<ThirdPersonController>();
+        characterAnimator = GetComponent<CharacterAnimator>();
         input = GetComponent<StarterAssetsInputs>();
         playerInput = GetComponent<PlayerInput>();
         SelectionRing.SetActive(false);
@@ -36,4 +38,5 @@ public class CharacterSelectionHandler : MonoBehaviour
         playerInput.enabled = false;
     }
     public Transform GetCameraFollowTarget=>thirdPersonController.CinemachineCameraTarget.transform;
+    public bool IsCharacterAnimatorBusy => characterAnimator.IsAnimatorInAction;
 }
