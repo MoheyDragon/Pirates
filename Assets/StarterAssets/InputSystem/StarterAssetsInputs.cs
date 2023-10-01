@@ -58,6 +58,11 @@ namespace StarterAssets
         {
 			Draw?.Invoke();
         }
+		public Action Interact;
+		public void OnInteract(InputValue value)
+        {
+			Interact?.Invoke();
+        }
 		public Action SwitchWeapon;
 		public void OnSwitchWeapon(InputValue value)
         {

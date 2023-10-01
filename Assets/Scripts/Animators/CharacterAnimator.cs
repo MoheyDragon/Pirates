@@ -10,8 +10,8 @@ public class CharacterAnimator : MonoBehaviour
     [Space]
     [SerializeField] Transform[] characterHands;
     [SerializeField] Weapon[] weaponsPrefabs;
-    [SerializeField] Transform weaponsParent;
                      Weapon[] weapons;
+    [SerializeField] Transform weaponsParent;
     [SerializeField] Transform[] weaponsPockets;
     public Transform GetPocketTransformByIndex(int pocketIndex) => weaponsPockets[pocketIndex];
     [SerializeField] float SheathDuration=0.5f;
