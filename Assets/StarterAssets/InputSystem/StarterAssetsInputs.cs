@@ -70,11 +70,11 @@ namespace StarterAssets
         }
 		public void OnNextCharacter(InputValue value)
         {
-			CharacterSelector.singleton.NextCharacter();
+			CharacterSelectorSystem.singleton.NextCharacter();
         }
 		public void OnPreviousCharacter(InputValue value)
 		{
-			CharacterSelector.singleton.PreviousCharacter();
+			CharacterSelectorSystem.singleton.PreviousCharacter();
 		}
 		public void MoveInput(Vector2 newMoveDirection)
 		{

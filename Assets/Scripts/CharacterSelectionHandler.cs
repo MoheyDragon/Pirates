@@ -8,14 +8,13 @@ public class CharacterSelectionHandler : MonoBehaviour
     CharacterAnimator characterAnimator;
     StarterAssetsInputs input;
     PlayerInput playerInput;
-    [SerializeField] GameObject SelectionRing;
+    [SerializeField] ParticleSystem SelectionRing;
     void Start()
     {
         thirdPersonController = GetComponent<ThirdPersonController>();
         characterAnimator = GetComponent<CharacterAnimator>();
         input = GetComponent<StarterAssetsInputs>();
         playerInput = GetComponent<PlayerInput>();
-        SelectionRing.SetActive(false);
         input.enabled = false;
         playerInput.enabled = false;
     }
@@ -26,9 +25,10 @@ public class CharacterSelectionHandler : MonoBehaviour
         playerInput.enabled = true;
         ZoomController.singleton.ChangeInputListner(input);
     }
-    public void HighlightSelectionRing(bool enabled)
+
+    public void HighlightSelectionRing()
     {
-        SelectionRing.SetActive(enabled);
+        SelectionRing.Play(true);
     }
     public void ReleaseCharacter()
     {

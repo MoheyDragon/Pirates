@@ -7,34 +7,27 @@ public class CharacterInteract : MonoBehaviour
 {
     [SerializeField] StarterAssetsInputs input;
     AgentLinkMover agentLinkMover;
-    NavMeshAgent agent;
-    
+    FollowTeam followTeam;
     IInteractabe currentInteractable;
+    CharacterSelectionHandler characterSelectionHandler;
     private void Awake()
     {
-        TryGetComponent(out NavMeshAgent agentTry);
-        if (agentTry)
-        {
-            agent = agentTry;
-        }
-        TryGetComponent(out AgentLinkMover agentLinkMoverTry);
-        if (agentLinkMoverTry)
-        {
-            agentLinkMover = agentLinkMoverTry;
-            agentLinkMover.StartMovingBetweenSurfaces += InteractAi;
-        }
+        _SetupReferences();
     }
     void Start()
     {
-        input.Interact += Interact;
-        if (agentLinkMover)
-            agentLinkMover.StartMovingBetweenSurfaces += InteractAi;
+        _SubscribeListeners();
     }
-    private void InteractAi()
+    private void _SetupReferences()
     {
-        agent.isStopped = true;
-        Interact();
-
+        followTeam = GetComponent<FollowTeam>();
+        agentLinkMover = GetComponent<AgentLinkMover>();
+        characterSelectionHandler = GetComponent<CharacterSelectionHandler>();
+    }
+    private void _SubscribeListeners()
+    {
+        input.Interact += Interact;
+        agentLinkMover.StartMovingBetweenSurfaces += Interact;
     }
     private void Interact()
     {
@@ -51,33 +44,29 @@ public class CharacterInteract : MonoBehaviour
     private void StartInteraction()
     {
         isInteracting = true;
-        input.enabled = false;
-        FollowCaptainManager.singleton.StopFollowing();
+        followTeam.PauseFollow();
     }
     private void FinishInteraction()
     {
         isInteracting = false;
-        input.enabled = true;
-        if (agent)
-        {
-            agent.isStopped = false;
-        }
-        FollowCaptainManager.singleton.ResumeFollowing();
+        followTeam.ResumeFollow();
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(TagsManager.singleton.interactableTag))
         {
-            other.GetComponent<IInteractabe>().DisplayInteractButton();
             currentInteractable = other.GetComponent<IInteractabe>();
+            if (CharacterSelectorSystem.singleton.GetSelectedCharacter == characterSelectionHandler)
+                other.GetComponent<IInteractabe>().DisplayInteractButton();
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag(TagsManager.singleton.interactableTag))
         {
-            other.GetComponent<IInteractabe>().HideInteractButton();
             currentInteractable = null;
+            if (CharacterSelectorSystem.singleton.GetSelectedCharacter == characterSelectionHandler)
+                other.GetComponent<IInteractabe>().HideInteractButton();
         }
     }
 }

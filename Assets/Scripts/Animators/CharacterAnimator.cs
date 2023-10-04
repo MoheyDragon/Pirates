@@ -30,6 +30,14 @@ public class CharacterAnimator : MonoBehaviour
             weapons[i].SetupWeapon(this);
         }
     }
+    private const string speedParameter = "Speed";
+    private float changeMovingStateDuration = 1;
+    public void ControlAnimationSpeed(float targetSpeed)
+    {
+        float prevSpeed = animator.GetFloat(speedParameter);
+        LeanTween.value(prevSpeed,targetSpeed,changeMovingStateDuration).setOnUpdate(
+            (float value)=>animator.SetFloat("Speed", value));
+    }
     private bool animatorInAction;
     public bool IsAnimatorInAction => animatorInAction;
     private bool IsWeaponDrawn;
