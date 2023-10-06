@@ -9,7 +9,7 @@ public class CharacterBehaviorsController : MonoBehaviour
     [HideInInspector] public FollowerBehavior followerBehavior;
     [HideInInspector] public CharacterAnimator characterAnimator;
     [HideInInspector] public StarterAssetsInputs input;
-    [HideInInspector] public PlayerInput playerInput;
+    [HideInInspector] public UnityEngine.InputSystem.PlayerInput playerInput;
     [HideInInspector] public ThirdPersonController thirdPersonController;
     private void Awake()
     {
@@ -18,7 +18,7 @@ public class CharacterBehaviorsController : MonoBehaviour
         followerBehavior = GetComponent<FollowerBehavior>();
         characterAnimator = GetComponent<CharacterAnimator>();
         input = GetComponent<StarterAssetsInputs>();
-        playerInput = GetComponent<PlayerInput>();
+        playerInput = GetComponent<UnityEngine.InputSystem.PlayerInput>();
         thirdPersonController = GetComponent<ThirdPersonController>();
     }
 }

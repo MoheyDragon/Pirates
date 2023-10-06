@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18244968, g: 0.22815959, b: 0.30726215, a: 1}
+  m_IndirectSpecularColor: {r: 0.1838541, g: 0.22863045, b: 0.3009802, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -841,7 +841,7 @@ PrefabInstance:
     - target: {fileID: 2070925442191277752, guid: a1a802ecaf6775746bb2a929fb554ad8,
         type: 3}
       propertyPath: CameraDistance
-      value: 23
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2070925442191277752, guid: a1a802ecaf6775746bb2a929fb554ad8,
         type: 3}
@@ -2136,6 +2136,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1780566612461865024, guid: 4d06c01069ab6d648abd3138713d04c7,
         type: 3}
+      propertyPath: overrideController
+      value: 
+      objectReference: {fileID: 22100000, guid: a504f18f4f690b244a01c33ab8fe2506,
+        type: 2}
+    - target: {fileID: 1780566612461865024, guid: 4d06c01069ab6d648abd3138713d04c7,
+        type: 3}
       propertyPath: weapons.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -2603,6 +2609,11 @@ PrefabInstance:
     - target: {fileID: 4541835616530412786, guid: 4d06c01069ab6d648abd3138713d04c7,
         type: 3}
       propertyPath: m_AutoRepath
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4541835616530412786, guid: 4d06c01069ab6d648abd3138713d04c7,
+        type: 3}
+      propertyPath: m_AutoBraking
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4541835616530412786, guid: 4d06c01069ab6d648abd3138713d04c7,
@@ -3760,6 +3771,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6903721226659750227, guid: c600111a7a8dd7142a5c8e0f57b639b5,
         type: 3}
+      propertyPath: m_AutoBraking
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6903721226659750227, guid: c600111a7a8dd7142a5c8e0f57b639b5,
+        type: 3}
       propertyPath: m_AutoTraverseOffMeshLink
       value: 1
       objectReference: {fileID: 0}
@@ -3823,6 +3839,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Captain
       objectReference: {fileID: 0}
+    - target: {fileID: 8682079624774426081, guid: c600111a7a8dd7142a5c8e0f57b639b5,
+        type: 3}
+      propertyPath: overrideController
+      value: 
+      objectReference: {fileID: 22100000, guid: ea2dbe4212bb3ef44b6a5e5a65e712c7,
+        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4186,6 +4208,12 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.06545792
       objectReference: {fileID: 0}
+    - target: {fileID: 1698555341718927262, guid: 15c94124c97f4f3428ddb16f0519d28c,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: 88ebab4ba1a063240a2d3d7bf3cccb9d,
+        type: 2}
     - target: {fileID: 1720790418310849249, guid: 15c94124c97f4f3428ddb16f0519d28c,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -5308,6 +5336,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6757051963454832895, guid: 15c94124c97f4f3428ddb16f0519d28c,
         type: 3}
+      propertyPath: m_AutoBraking
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6757051963454832895, guid: 15c94124c97f4f3428ddb16f0519d28c,
+        type: 3}
       propertyPath: m_StoppingDistance
       value: 5
       objectReference: {fileID: 0}
@@ -5671,6 +5704,12 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.48003325
       objectReference: {fileID: 0}
+    - target: {fileID: 8824766629207489613, guid: 15c94124c97f4f3428ddb16f0519d28c,
+        type: 3}
+      propertyPath: overrideController
+      value: 
+      objectReference: {fileID: 22100000, guid: 88ebab4ba1a063240a2d3d7bf3cccb9d,
+        type: 2}
     - target: {fileID: 8824766629207489613, guid: 15c94124c97f4f3428ddb16f0519d28c,
         type: 3}
       propertyPath: weapons.Array.size
