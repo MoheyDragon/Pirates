@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using StarterAssets;
 
 public class CharacterAnimator : MonoBehaviour
 {
+    CharacterBehaviorsController characterBehaviorsController;
     Animator animator;
-    [SerializeField] StarterAssetsInputs input;
     [Space]
     [SerializeField] Transform[] characterHands;
     [SerializeField] Weapon[] weaponsPrefabs;
@@ -16,10 +13,18 @@ public class CharacterAnimator : MonoBehaviour
     public Transform GetPocketTransformByIndex(int pocketIndex) => weaponsPockets[pocketIndex];
     [SerializeField] float SheathDuration=0.5f;
     int currentWeaponSelectedIndex;
-
+    private void Awake()
+    {
+        characterBehaviorsController = GetComponent<CharacterBehaviorsController>();
+    }
     private void Start()
     {
+        _Setup();
+    }
+    private void _Setup()
+    {
         animator = GetComponent<Animator>();
+        StarterAssets.StarterAssetsInputs input = characterBehaviorsController.input;
         input.Attack += OnAttackPressed;
         input.Draw += OnDrawPressed;
         input.SwitchWeapon += OnChangeWeaponPressed;
@@ -36,7 +41,7 @@ public class CharacterAnimator : MonoBehaviour
     {
         float prevSpeed = animator.GetFloat(speedParameter);
         LeanTween.value(prevSpeed,targetSpeed,changeMovingStateDuration).setOnUpdate(
-            (float value)=>animator.SetFloat("Speed", value));
+            (float value)=>animator.SetFloat(speedParameter, value));
     }
     private bool animatorInAction;
     public bool IsAnimatorInAction => animatorInAction;

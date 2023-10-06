@@ -71,7 +71,7 @@ PrefabInstance:
     - target: {fileID: 5703502967421447003, guid: 44120c02df7caf840a716db6db8a395a,
         type: 3}
       propertyPath: m_Name
-      value: Captain Variant
+      value: Captain
       objectReference: {fileID: 0}
     - target: {fileID: 6360393209946332951, guid: 44120c02df7caf840a716db6db8a395a,
         type: 3}

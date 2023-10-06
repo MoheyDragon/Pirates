@@ -4,12 +4,20 @@ using StarterAssets;
 public class CharacterSelector : Singleton<CharacterSelector>
 {
     int currentCharacterIndex;
-                     SelectableCharacter currentSelectedCharacter;
-    [SerializeField] SelectableCharacter[] characters;
-    [SerializeField] CinemachineVirtualCamera vCam;
+    SelectableCharacter currentSelectedCharacter;
+    SelectableCharacter[] characters;
     private void Start()
     {
+        AssignCharacters();
         SelectCharacter(0);
+    }
+    private void AssignCharacters()
+    {
+        characters = new SelectableCharacter[CharactersManager.singleton.Characters.Length];
+        for (int i = 0; i < characters.Length; i++)
+        {
+            characters[i] = CharactersManager.singleton.Characters[i].selectableCharacter;
+        }
     }
     public void NextCharacter()
     {
@@ -41,16 +49,6 @@ public class CharacterSelector : Singleton<CharacterSelector>
         HighlightSelectionRing();
         FollowSelectedCharacter();
     }
-    private void SetSelectedCharacter(int characterIndex)
-    {
-        currentCharacterIndex = characterIndex;
-        currentSelectedCharacter = characters[characterIndex];
-
-    }
-    private void ChangeCameraFollowTarget()
-    {
-        vCam.Follow = currentSelectedCharacter.GetCameraFollowTarget;
-    }
     private void DeControlPreviousCharacter()
     {
         if(currentSelectedCharacter!=null)
@@ -61,6 +59,20 @@ public class CharacterSelector : Singleton<CharacterSelector>
         if(currentSelectedCharacter!=null)
         currentSelectedCharacter.StopHighlightSelectionRing();
     }
+    private void SetSelectedCharacter(int characterIndex)
+    {
+        currentCharacterIndex = characterIndex;
+        currentSelectedCharacter = characters[characterIndex];
+
+    }
+    private void ChangeCameraFollowTarget()
+    {
+        ZoomController.singleton.vCam.Follow = currentSelectedCharacter.GetCameraFollowTarget;
+    }
+    private void ControlSelectedCharacter()
+    {
+        currentSelectedCharacter.ControlCharacter();
+    }
     private void HighlightSelectionRing()
     {
         currentSelectedCharacter.HighlightSelectionRing();
@@ -68,10 +80,6 @@ public class CharacterSelector : Singleton<CharacterSelector>
     private void FollowSelectedCharacter()
     {
         FollowSelectedCharacterSystem.singleton.FollowSelectedCharacter(currentSelectedCharacter.transform);
-    }
-    private void ControlSelectedCharacter()
-    {
-        currentSelectedCharacter.ControlCharacter();
     }
     public SelectableCharacter GetSelectedCharacter => currentSelectedCharacter;
 }

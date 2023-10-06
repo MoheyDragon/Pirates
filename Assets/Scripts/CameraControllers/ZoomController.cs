@@ -3,7 +3,7 @@ using Cinemachine;
 using StarterAssets;
 public class ZoomController : Singleton<ZoomController>
 {
-    [SerializeField] CinemachineVirtualCamera vCam;
+    public CinemachineVirtualCamera vCam;
     [SerializeField] float minZoom, maxZoom, defaultZoom;
     float currentZoom;
     Cinemachine3rdPersonFollow cinemachine3RdPersonFollow;

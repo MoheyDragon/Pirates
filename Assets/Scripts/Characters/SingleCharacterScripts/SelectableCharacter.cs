@@ -1,29 +1,24 @@
 using UnityEngine;
-using StarterAssets;
-using UnityEngine.InputSystem;
 
 public class SelectableCharacter : MonoBehaviour
 {
-    ThirdPersonController thirdPersonController;
-    CharacterAnimator characterAnimator;
-    StarterAssetsInputs input;
-    PlayerInput playerInput;
+    CharacterBehaviorsController characterBehaviorsController;
     [SerializeField] ParticleSystem SelectionRing;
+    private void Awake()
+    {
+        characterBehaviorsController = GetComponent<CharacterBehaviorsController>();
+    }
     void Start()
     {
-        thirdPersonController = GetComponent<ThirdPersonController>();
-        characterAnimator = GetComponent<CharacterAnimator>();
-        input = GetComponent<StarterAssetsInputs>();
-        playerInput = GetComponent<PlayerInput>();
-        input.enabled = false;
-        playerInput.enabled = false;
+        characterBehaviorsController.input.enabled = false;
+        characterBehaviorsController.playerInput.enabled = false;
     }
     public void ControlCharacter()
     {
-        thirdPersonController.SelectCharacter(true);
-        input.enabled = true;
-        playerInput.enabled = true;
-        ZoomController.singleton.ChangeInputListner(input);
+        characterBehaviorsController.thirdPersonController.isCharacterSelected = true;
+        characterBehaviorsController.input.enabled = true;
+        characterBehaviorsController.playerInput.enabled = true;
+        ZoomController.singleton.ChangeInputListner(characterBehaviorsController.input);
     }
 
     public void HighlightSelectionRing()
@@ -36,11 +31,11 @@ public class SelectableCharacter : MonoBehaviour
     }
     public void ReleaseCharacter()
     {
-        thirdPersonController.SelectCharacter(false);
-        thirdPersonController.StopCharacterMovement();
-        input.enabled = false;
-        playerInput.enabled = false;
+        characterBehaviorsController.thirdPersonController.isCharacterSelected = false;
+        characterBehaviorsController.thirdPersonController.StopCharacterMovement();
+        characterBehaviorsController.input.enabled = false;
+        characterBehaviorsController.playerInput.enabled = false;
     }
-    public Transform GetCameraFollowTarget=>thirdPersonController.CinemachineCameraTarget.transform;
-    public bool IsCharacterAnimatorBusy => characterAnimator.IsAnimatorInAction;
+    public Transform GetCameraFollowTarget=> characterBehaviorsController.thirdPersonController.CinemachineCameraTarget.transform;
+    public bool IsCharacterAnimatorBusy => characterBehaviorsController.characterAnimator.IsAnimatorInAction;
 }

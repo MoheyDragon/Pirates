@@ -1,30 +1,21 @@
 using UnityEngine;
-using UnityEngine.AI;
-using Unity.AI.Navigation.Samples;
 using StarterAssets;
 
 public class CharacterInteract : MonoBehaviour
 {
-    [SerializeField] StarterAssetsInputs input;
-    FollowerBehavior followTeam;
+    CharacterBehaviorsController characterBehaviorsController;
     IInteractabe currentInteractable;
-    SelectableCharacter characterSelectionHandler;
     private void Awake()
     {
-        _SetupReferences();
+        characterBehaviorsController = GetComponent<CharacterBehaviorsController>();
     }
     void Start()
     {
         _SubscribeListeners();
     }
-    private void _SetupReferences()
-    {
-        followTeam = GetComponent<FollowerBehavior>();
-        characterSelectionHandler = GetComponent<SelectableCharacter>();
-    }
     private void _SubscribeListeners()
     {
-        input.Interact += Interact;
+        characterBehaviorsController.input.Interact += Interact;
     }
     public void Interact()
     {
@@ -41,19 +32,19 @@ public class CharacterInteract : MonoBehaviour
     private void StartInteraction()
     {
         isInteracting = true;
-        followTeam.PauseFollow();
+        characterBehaviorsController.followerBehavior.PauseFollow();
     }
     private void FinishInteraction()
     {
         isInteracting = false;
-        followTeam.ResumeFollow();
+        characterBehaviorsController.followerBehavior.ResumeFollow();
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(TagsManager.singleton.interactableTag))
         {
             currentInteractable = other.GetComponent<IInteractabe>();
-            if (CharacterSelector.singleton.GetSelectedCharacter == characterSelectionHandler)
+            if (CharacterSelector.singleton.GetSelectedCharacter == characterBehaviorsController.selectableCharacter)
                 other.GetComponent<IInteractabe>().DisplayInteractButton();
         }
     }
@@ -62,7 +53,7 @@ public class CharacterInteract : MonoBehaviour
         if (other.CompareTag(TagsManager.singleton.interactableTag))
         {
             currentInteractable = null;
-            if (CharacterSelector.singleton.GetSelectedCharacter == characterSelectionHandler)
+            if (CharacterSelector.singleton.GetSelectedCharacter == characterBehaviorsController.selectableCharacter)
                 other.GetComponent<IInteractabe>().HideInteractButton();
         }
     }

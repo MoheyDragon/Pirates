@@ -376,8 +376,7 @@ namespace StarterAssets
             }
         }
         #region SelectCharacter
-        private bool isCharacterSelected;
-        public void SelectCharacter(bool isSelected) => isCharacterSelected = isSelected;
+        public bool isCharacterSelected;
         public void StopCharacterMovement()=> _animator.SetFloat(_animIDSpeed, 0);
         #endregion
     }

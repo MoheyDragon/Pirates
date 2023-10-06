@@ -4,13 +4,25 @@ using UnityEngine;
 
 public class FollowSelectedCharacterSystem : Singleton<FollowSelectedCharacterSystem>
 {
-    [SerializeField] List<FollowerBehavior> followers;
+    FollowerBehavior[] characters;
+    private void Start()
+    {
+        AssignCharacters();
+    }
+    private void AssignCharacters()
+    {
+        characters = new FollowerBehavior[CharactersManager.singleton.Characters.Length];
+        for (int i = 0; i < characters.Length; i++)
+        {
+            characters[i] = CharactersManager.singleton.Characters[i].followerBehavior;
+        }
+    }
     public void StopFollowing()
     {
     }
     public void FollowSelectedCharacter(Transform selectedCharacter)
     {
-        foreach (FollowerBehavior follower in followers)
+        foreach (FollowerBehavior follower in characters)
             follower.OnSelectedCharacterChanged(selectedCharacter);
     }
 }
