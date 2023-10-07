@@ -95,6 +95,7 @@ public class CharacterAnimator : MonoBehaviour
     private void Attack()
     {
         animatorInAction = true;
+        print(animatorInAction);
         animator.SetTrigger(AttackAnimatorParameter);
     }
     public void ReachedAttackingFrame()
@@ -104,12 +105,14 @@ public class CharacterAnimator : MonoBehaviour
     private void DrawWeapon()
     {
         animatorInAction = true;
+        print(animatorInAction);
         RaiseWeaponUpperBodyLayer();
         animator.SetTrigger(DrawAnimatorParameter);
     }
     private void SheathWeapon()
     {
         animatorInAction = true;
+        print(animatorInAction);
         animator.SetTrigger(SheathAnimatorParameter);
     }
     public void MoveWeaponToCombatSlot()
@@ -125,10 +128,12 @@ public class CharacterAnimator : MonoBehaviour
     public void AnimationFinished()
     {
         animatorInAction = false;
+        print(animatorInAction);
     }
     public void OnDrawFinish()
     {
         animatorInAction = false;
+        print(animatorInAction);
         IsWeaponDrawn = !IsWeaponDrawn;
     }
     
