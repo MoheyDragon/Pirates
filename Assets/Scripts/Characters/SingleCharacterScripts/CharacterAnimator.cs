@@ -1,11 +1,9 @@
 using UnityEngine;
-using System;
 
 public class CharacterAnimator : MonoBehaviour
 {
     CharacterBehaviorsController characterBehaviorsController;
     Animator animator;
-    [SerializeField] AnimatorOverrideController overrideController;
     [Space]
     [SerializeField] Transform[] characterHands;
     [SerializeField] Weapon[] weaponsPrefabs;
@@ -26,7 +24,6 @@ public class CharacterAnimator : MonoBehaviour
     private void _Setup()
     {
         animator = GetComponent<Animator>();
-        animator.runtimeAnimatorController = overrideController;
         StarterAssets.StarterAssetsInputs input = characterBehaviorsController.input;
         input.Attack += OnAttackPressed;
         input.Draw += OnDrawPressed;
@@ -76,7 +73,6 @@ public class CharacterAnimator : MonoBehaviour
     private void OnChangeWeaponPressed()
     {
         if (weapons.Length == 1) return;
-        if (animatorInAction) return;
         if (IsWeaponDrawn)
         {
             SheathWeapon();
@@ -90,6 +86,7 @@ public class CharacterAnimator : MonoBehaviour
     private void DoWeaponSwitch()
     {
         _SwitchCurrentWeaponIndex();
+        RaiseWeaponUpperBodyLayer();
         weaponIndexSwitcherPending = false;
     }
     private void Attack()
@@ -104,7 +101,6 @@ public class CharacterAnimator : MonoBehaviour
     private void DrawWeapon()
     {
         animatorInAction = true;
-        RaiseWeaponUpperBodyLayer();
         animator.SetTrigger(DrawAnimatorParameter);
     }
     private void SheathWeapon()
@@ -130,6 +126,10 @@ public class CharacterAnimator : MonoBehaviour
     {
         animatorInAction = false;
         IsWeaponDrawn = !IsWeaponDrawn;
+        if (weaponIndexSwitcherPending)
+        {
+            DoWeaponSwitch();
+        }
     }
     
     private void EnterCombatMode()
@@ -138,13 +138,12 @@ public class CharacterAnimator : MonoBehaviour
     }
     private void ExitCombatMode()
     {
-        ChangeLayerWeight(GetWeaponCombatLayer, 0,LowerWeaponUpperBodyLayer);
+        ChangeLayerWeight(GetWeaponCombatLayer, 0);
     }
-    private void ChangeLayerWeight(int layerIndex, float targetWeight, Action callBack = null)
+    private void ChangeLayerWeight(int layerIndex,float targetWeight)
     {
         LeanTween.value(gameObject, 1, 0, SheathDuration).setEaseInOutSine().setOnUpdate((float value) =>
-            animator.SetLayerWeight(layerIndex, targetWeight)
-        ).setOnComplete(() =>{ if (callBack != null) callBack.Invoke(); });
+        animator.SetLayerWeight(layerIndex, targetWeight));
     }
     private void _SwitchCurrentWeaponIndex()
     {
@@ -155,12 +154,6 @@ public class CharacterAnimator : MonoBehaviour
     private void RaiseWeaponUpperBodyLayer()
     {
         animator.SetLayerWeight(GetWeaponUpperBodyLayer, 1);
-    }
-    private void LowerWeaponUpperBodyLayer()
-    {
-        animator.SetLayerWeight(GetWeaponUpperBodyLayer, 0);
-        if (weaponIndexSwitcherPending)
-            DoWeaponSwitch();
     }
     // There Should be 2 layers per weapon, first is synched with the Base layer and has the non-combat animations that should play
     // while selecting this weapon (like walking- jumping,...), Second layer is not synched with base layer, and have an avatar mask 
