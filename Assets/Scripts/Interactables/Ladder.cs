@@ -4,7 +4,7 @@ using UnityEngine.AI;
 public class Ladder : MonoBehaviour,IInteractabe
 {
     [SerializeField] GameObject PlayerPressHint;
-    [SerializeField] float ladderHeight, climbDuration;
+    [SerializeField] float fullClimbDuration;
     Vector3 bottomPoint, topPoint;
     private void Awake()
     {
@@ -24,20 +24,28 @@ public class Ladder : MonoBehaviour,IInteractabe
             bottomPoint = offMeshLink.startTransform.position;
         }
     }
-    public void Interact(GameObject player,Action onFinishAction)
+    public void Interact(CharacterInteract interacter,Action onFinishAction)
     {
-        if (IsDirectionUp(player.transform.position))
-            ClimbUp(player, onFinishAction);
+        interacter.GetBehavorsController.characterAnimator.Climbing(true);
+        onFinishAction+= ()=>interacter.GetBehavorsController.characterAnimator.Climbing(false);
+        if (IsDirectionUp(interacter.transform.position))
+            ClimbUp(interacter, onFinishAction);
         else
-            ClimbDown(player, onFinishAction);
+            ClimbDown(interacter, onFinishAction);
     }
-    public void ClimbUp(GameObject player,Action onFinishAction)
+    public void ClimbUp(CharacterInteract interacter,Action onFinishAction)
     {
-        LeanTween.moveLocalY(player, player.transform.localPosition.y + ladderHeight, climbDuration).setOnComplete(onFinishAction);
+        LeanTween.moveY(interacter.gameObject, topPoint.y,GetClimbDuration(interacter,topPoint)).setOnComplete(onFinishAction);
     }
-    public void ClimbDown(GameObject player, Action onFinishAction)
+    public void ClimbDown(CharacterInteract interacter, Action onFinishAction)
     {
-        LeanTween.moveLocalY(player, player.transform.localPosition.y - ladderHeight, climbDuration).setOnComplete(onFinishAction);
+        LeanTween.moveY(interacter.gameObject, bottomPoint.y, GetClimbDuration(interacter,bottomPoint)).setOnComplete(onFinishAction);
+    }
+    private float GetClimbDuration(CharacterInteract interacter,Vector3 destination)
+    {
+        float time= Mathf.Abs(destination.y-interacter.transform.position.y) * fullClimbDuration/destination.y;
+        print("current = " + interacter.gameObject.transform.position.y + " , top point = " + topPoint.y + " \n climb duration = " + time);
+        return time;
     }
     private bool IsDirectionUp(Vector3 playerPosition)
     {

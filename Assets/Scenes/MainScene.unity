@@ -3351,6 +3351,11 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.29917073
       objectReference: {fileID: 0}
+    - target: {fileID: 8453382451889718163, guid: 4d06c01069ab6d648abd3138713d04c7,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8507278294068781113, guid: 4d06c01069ab6d648abd3138713d04c7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3544,6 +3549,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 19017267}
     m_Modifications:
+    - target: {fileID: 1556367507014260274, guid: c600111a7a8dd7142a5c8e0f57b639b5,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6903721226659750227, guid: c600111a7a8dd7142a5c8e0f57b639b5,
         type: 3}
       propertyPath: m_AutoTraverseOffMeshLink
@@ -3971,6 +3981,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0.06545792
+      objectReference: {fileID: 0}
+    - target: {fileID: 1698555341718927262, guid: 15c94124c97f4f3428ddb16f0519d28c,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1720790418310849249, guid: 15c94124c97f4f3428ddb16f0519d28c,
         type: 3}
@@ -5545,6 +5560,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2079373931}
     m_Modifications:
+    - target: {fileID: 5147605894386285953, guid: 6d4af7fe3b0302c499afddcbf8c97586,
+        type: 3}
+      propertyPath: fullClimbDuration
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5640482569877648413, guid: 6d4af7fe3b0302c499afddcbf8c97586,
         type: 3}
       propertyPath: m_Name

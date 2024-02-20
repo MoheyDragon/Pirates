@@ -25,7 +25,7 @@ public class CharacterInteract : MonoBehaviour
             //Play warining sound that there is nothing to interact with
             return;
         }
-        currentInteractable.Interact(gameObject,FinishInteraction);
+        currentInteractable.Interact(this,FinishInteraction);
         StartInteraction();
     }
     bool isInteracting;
@@ -57,4 +57,5 @@ public class CharacterInteract : MonoBehaviour
                 other.GetComponent<IInteractabe>().HideInteractButton();
         }
     }
+    public CharacterBehaviorsController GetBehavorsController => characterBehaviorsController;
 }

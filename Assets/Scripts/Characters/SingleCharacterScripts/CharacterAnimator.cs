@@ -160,4 +160,9 @@ public class CharacterAnimator : MonoBehaviour
     // of upper body only, and it's responsible of Drawing, Sheathin and attack animations
     private int GetWeaponCombatLayer=> (currentWeaponSelectedIndex * 2) + 1;
     private int GetWeaponUpperBodyLayer => (currentWeaponSelectedIndex * 2) + 2;
+    private const string climbingParameter = "ClimbLadder";
+    public void Climbing(bool active)
+    {
+        animator.SetBool(climbingParameter,active);
+    }
 }
