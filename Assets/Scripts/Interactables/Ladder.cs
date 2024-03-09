@@ -6,6 +6,9 @@ public class Ladder : MonoBehaviour,IInteractabe
     [SerializeField] GameObject PlayerPressHint;
     [SerializeField] float fullClimbDuration;
     Vector3 bottomPoint, topPoint;
+
+    public Vector3 Position => transform.position;
+
     private void Awake()
     {
         _SetLadderPoints();

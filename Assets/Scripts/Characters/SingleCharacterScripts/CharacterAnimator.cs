@@ -161,8 +161,14 @@ public class CharacterAnimator : MonoBehaviour
     private int GetWeaponCombatLayer=> (currentWeaponSelectedIndex * 2) + 1;
     private int GetWeaponUpperBodyLayer => (currentWeaponSelectedIndex * 2) + 2;
     private const string climbingParameter = "ClimbLadder";
-    public void Climbing(bool active)
+    public void Climbing(bool isClimbing)
     {
-        animator.SetBool(climbingParameter,active);
+
+        //if (isClimbing)
+        //    characterBehaviorsController.selectableCharacter.ReleaseCharacter();
+        //else
+        //    characterBehaviorsController.selectableCharacter.ControlCharacter();
+
+        animator.SetBool(climbingParameter,isClimbing);
     }
 }

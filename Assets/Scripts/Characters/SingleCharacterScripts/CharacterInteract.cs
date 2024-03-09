@@ -25,8 +25,16 @@ public class CharacterInteract : MonoBehaviour
             //Play warining sound that there is nothing to interact with
             return;
         }
+        FaceInteractable();
         currentInteractable.Interact(this,FinishInteraction);
         StartInteraction();
+    }
+    private void FaceInteractable()
+    {
+        Vector3 direction = currentInteractable.Position - transform.position;
+        direction.y = 0f; // Ignore height difference
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        transform.rotation = targetRotation;
     }
     bool isInteracting;
     private void StartInteraction()
